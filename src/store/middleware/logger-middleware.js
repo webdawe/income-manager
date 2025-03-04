@@ -1,4 +1,8 @@
-import { addExpenseAction, setIncomeAction } from "store/expense/expense-slice";
+import {
+  addExpenseAction,
+  incrementAction,
+  setIncomeAction,
+} from "store/expense/expense-slice";
 
 const { createListenerMiddleware, isAnyOf } = require("@reduxjs/toolkit");
 
@@ -11,6 +15,7 @@ loggerMiddleware.startListening({
   matcher: isAnyOf(setIncomeAction, addExpenseAction),
   effect: async (action, listenerAPI) => {
     console.log("Action: ", action);
+    listenerAPI.dispatch(incrementAction);
     console.log("New Store Value", listenerAPI.getState());
   },
 });
